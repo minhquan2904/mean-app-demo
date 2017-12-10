@@ -1,0 +1,26 @@
+<link href="http://fonts.googleapis.com/css?family=Varela" rel="stylesheet" />
+<body>
+    <div id="wrapper">
+        <app-admin-navbar></app-admin-navbar>
+        <div id="banner">
+            <div class="container">
+                <div class="title">
+                    <h2>Xin chào  {{currentUser.firstname}} !</h2>
+                   
+                    <span class="byline">Bạn có thể thực hiện các tác vụ với thông tin đoàn viên</span> </div>
+                <ul class="actions">
+                    <li><a [routerLink]="['/add-file']" class="button">Nhập sổ đoàn</a></li>
+                </ul>
+                <ul class="actions">
+                    <li><a href="#" class="button">Quản lý sổ đoàn</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+    <div id="copyright" class="container">
+        <p>footer</p>
+    </div>
+    </body>

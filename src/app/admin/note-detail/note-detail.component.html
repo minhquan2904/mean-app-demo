@@ -1,0 +1,158 @@
+<app-admin-navbar></app-admin-navbar>
+<alert></alert>
+
+<div class="container">
+    <div class="row">
+     
+      <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+            <h2>Search</h2>
+            <form name="form" (ngSubmit)="f.form.valid && find()" #f="ngForm" novalidate>
+                    <div class="form-group"  [ngClass]="{ 'has-error': f.submitted && !selectedValue.valid }">
+                            <div class="select">
+                                    <select class="selectpicker" [(ngModel)]="model.selectedValue" name="selectedValue" #selectedValue="ngModel">
+                                        <option disabled selected>Select a Custom Fix</option>
+                                        <option *ngFor="let k of kinds" [ngValue]="k.value">{{k.name}}</option>
+                                    </select>    
+                             <div *ngIf="f.submitted && !selectedValue.valid" class="help-block">selectedValue is required</div>                         
+                             
+                            </div>
+                    </div>
+                    
+                    <div class="form-group"  [ngClass]="{ 'has-error': f.submitted && !content.valid }">
+                            <div class="input-group">
+                                    <input type="text" class="form-control" name="content" [(ngModel)]="model.content" #content="ngModel" required>
+                                    <span class="input-group-btn">
+                                         <button type="submit" class="btn btn-primary btn-block">Go!</button>
+                                    </span>
+                             </div>
+                             <div *ngIf="f.submitted && !content.valid" class="help-block">Content is required</div>                         
+                                                         
+                    </div>     
+                                
+              </form>
+
+      </div>
+      
+      
+
+
+        </div>
+
+        <hr class="colorgraph ">
+        <table class="table" *ngIf="success">
+                <thead>
+                  <tr>
+                    <th>Mã số sinh viên</th>
+                    <th>Họ</th>
+                    <th>Tên</th>
+                    <th>Vị trí lưu trữ</th>
+                    <th>Tác vụ</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let note of notebooks">
+                    <td>{{ note.student_code }}</td>
+                    <td>{{ note.firstname }}</td>
+                    <td>{{ note.lastname }}</td>
+                    <td>{{ note.save_place }}</td>
+                    <td><!-- Trigger the modal with a button -->
+                      <button (click)="getInfo(note)" type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Click</button></td>
+                  </tr>
+                </tbody>
+        </table>
+ 
+        <hr class="colorgraph ">
+        
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Thông tin</h4>
+          </div>
+          <div class="modal-body" style="height: 550px">
+            <form>
+                <!-- Std code-->
+                <div class="form-group">
+                    <label>Mã số sinh viên:</label>
+                    <input [disabled]="edit" [(ngModel)]="note.student_code" name="student_code" class="form-control" nullValue>
+                </div>
+                <!-- Firstname -->
+                <div class="form-group">
+                    <label>Họ:</label>
+                    <input [disabled]="edit" [(ngModel)]="note.firstname" name="firstname"class="form-control" nullValue>
+                </div>
+                <!-- Lasttname -->
+                <div class="form-group">
+                    <label>Tên:</label>
+                    <input [disabled]="edit" [(ngModel)]="note.lastname" name="lastname" class="form-control" nullValue>
+                </div>
+                <!-- SX -->
+                <div class="form-group">
+                    <label>Giới tính:</label>
+                    <input [disabled]="edit" [(ngModel)]="note.sx" name="sx" class="form-control" nullValue>
+                </div>
+                <!-- Birthday -->
+                <div class="form-group">
+                    <label>Ngày sinh:</label>
+                    <input [disabled]="edit" [(ngModel)]="note.birthday" name="birthday" class="form-control" nullValue>
+                </div>
+                 <!-- join_date -->
+                 <div class="form-group">
+                    <label>Ngày vào đoàn:</label>
+                    <input [disabled]="edit" [(ngModel)]="note.join_date" name="join_date" class="form-control" nullValue>
+                </div>
+                <!-- join_place -->
+                <div class="form-group">
+                    <label>Nơi vào đoàn:</label>
+                    <input [disabled]="edit" [(ngModel)]="note.join_place" name="join_place" class="form-control" nullValue>
+                </div>
+                 <!-- year -->
+                 <div class="form-group">
+                    <label>Khóa:</label>
+                    <input [disabled]="edit" [(ngModel)]="note.year" name="year" class="form-control" nullValue>
+                </div>
+                 <!-- class -->
+                 <div class="form-group">
+                    <label>Lớp:</label>
+                    <input [disabled]="edit" [(ngModel)]="note.s_class" name="s_class" class="form-control" nullValue>
+                </div>
+                <!-- faculty -->
+                <div class="form-group">
+                    <label>Khoa:</label>
+                    <input [disabled]="edit" [(ngModel)]="note.faculty" name="faculty" class="form-control" nullValue>
+                </div>
+                 <!-- major -->
+                 <div class="form-group">
+                    <label>Ngành:</label>
+                    <input [disabled]="edit" [(ngModel)]="note.major" name="major" class="form-control" nullValue>
+                </div>
+                 <!-- save_place -->
+                 <div class="form-group">
+                    <label>Vị trí lưu trữ:</label>
+                    <input [disabled]="edit" [(ngModel)]="note.save_place" name="save_place" class="form-control" nullValue>
+                </div>
+                
+
+                <div class="modal-footer" style ="padding-top: 450px;">
+                    <div class="row">
+        
+                        <button type="button" class="btn btn-primary" (click)="change()">Edit</button>
+                        <button *ngIf="!edit" type="button" class="btn btn-success" (click)="save_info()" data-dismiss="modal" >Save</button>
+                        <button (click)="_delete()" type="button" class="btn btn-danger" data-dismiss="modal">Delete</button>
+                        <button (click)="change()" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                    
+                  </div>
+            </form>
+            
+          </div>
+         
+        </div>
+
+      </div>
+    </div>
+</div>

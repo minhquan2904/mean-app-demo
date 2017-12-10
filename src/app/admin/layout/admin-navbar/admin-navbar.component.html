@@ -1,0 +1,15 @@
+<div id="header-wrapper">
+  <div id="header" class="container">
+      <div id="logo">
+          <h1><a href="#">SoHoaSoDoan</a></h1>
+      </div>
+      <div id="menu">
+          <ul>
+              <li  [routerLinkActive]="['current_page_item']" ><a [routerLink]="['/home']">Trang chủ</a></li>
+              <li  [routerLinkActive]="['current_page_item']" ><a [routerLink]="['/add-file']" title="">Nhập sổ đoàn</a></li>
+              <li  [routerLinkActive]="['current_page_item']" ><a [routerLink]="['/detail']" title="">Quản lý thông tin đoàn viên</a></li>
+              <li><a [routerLink]="['/login']">Đăng xuất</a></li>
+          </ul>
+      </div>
+    </div>
+</div>
